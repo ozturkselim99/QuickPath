@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="btn_find_shortest_route" type="id"/>
+    <item name="edt_txt_address_lat" type="id"/>
+    <item name="edt_txt_address_lng" type="id"/>
+    <item name="txt_result" type="id"/>
+</resources>

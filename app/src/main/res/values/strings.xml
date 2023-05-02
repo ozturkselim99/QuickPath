@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">QuickPath</string>
+    <string name="depo">Depo</string>
+    <string name="lat">Lat</string>
+    <string name="lng">Lng</string>
+    <string name="enter_the_count_of_address">Enter the count of address</string>
+    <string name="create">Create</string>
+    <string name="clear">Clear</string>
+</resources>
