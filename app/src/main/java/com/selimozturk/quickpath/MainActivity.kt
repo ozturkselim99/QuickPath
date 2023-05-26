@@ -49,9 +49,7 @@ class MainActivity : AppCompatActivity() {
         binding.btnCreate.setOnClickListener {
             if (binding.edtTxtAddressCount.text.isNullOrEmpty()) {
                 Toast.makeText(
-                    this@MainActivity,
-                    "Please enter the count of address",
-                    Toast.LENGTH_SHORT
+                    this@MainActivity, "Please enter the count of address", Toast.LENGTH_SHORT
                 ).show()
                 return@setOnClickListener
             }
@@ -71,17 +69,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun isAddressesEditTextsValid(): Boolean {
-        return layoutList.all { layout ->
-            val latEditText = layout.findViewById<TextInputEditText>(R.id.edt_txt_address_lat)
-            val lngEditText = layout.findViewById<TextInputEditText>(R.id.edt_txt_address_lng)
-            !latEditText?.text.isNullOrEmpty() && !lngEditText?.text.isNullOrEmpty()
-        }
-    }
-
-    private fun isDepoCoordsEditTextsValid(): Boolean {
-        return !binding.edtTxtDepoLat.text.isNullOrEmpty() && !binding.edtTxtDepoLng.text.isNullOrEmpty()
-    }
 
     private fun createAddressLayouts(numCoords: Int, context: Context) = with(binding) {
         clearAddressLayouts()
@@ -94,41 +81,23 @@ class MainActivity : AppCompatActivity() {
         }
 
         val textViewResult = createTextView(
-            context,
-            "Shortest Route:",
-            16f,
-            ContextCompat.getColor(context, R.color.white)
+            context, "Shortest Route:", 16f, ContextCompat.getColor(context, R.color.white)
         )
         textViewResult.id = R.id.txt_result
         textViewResult.layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
+            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
         ).apply {
             topMargin = 24.dpToPx()
         }
         quickPath.addView(textViewResult)
 
-        val btnFindShortestRoute =
-            createMaterialButton(context, "Find Shortest Route", View.OnClickListener {
-                if (!isAddressesEditTextsValid() && !isDepoCoordsEditTextsValid()) {
-                    Toast.makeText(context, "Please fill all fields", Toast.LENGTH_SHORT).show()
-                    return@OnClickListener
-                }
-                val route = getRoute()
-                findViewById<TextView>(R.id.txt_result)?.text = "Shortest Route: $route"
-            })
-        btnFindShortestRoute.id = R.id.btn_find_shortest_route
-        btnFindShortestRoute.setOnClickListener {
-            if (!isAddressesEditTextsValid() && !isDepoCoordsEditTextsValid()) {
-                Toast.makeText(context, "Please fill all fields", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
+        val btnFindShortestRoute = createMaterialButton(context, "Find Shortest Route") {
             val route = getRoute()
             findViewById<TextView>(R.id.txt_result)?.text = "Shortest Route: $route"
         }
+        btnFindShortestRoute.id = R.id.btn_find_shortest_route
         btnFindShortestRoute.layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
+            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
         ).apply {
             topMargin = 24.dpToPx()
         }
@@ -140,28 +109,22 @@ class MainActivity : AppCompatActivity() {
         layout.id = View.generateViewId()
         layout.orientation = LinearLayout.HORIZONTAL
         layout.layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
+            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
         ).apply {
             topMargin = 24.dpToPx()
         }
         val textView = createTextView(
-            context,
-            "${i + 1}. Address",
-            16f,
-            ContextCompat.getColor(context, R.color.white)
+            context, "${i + 1}. Address", 16f, ContextCompat.getColor(context, R.color.white)
         )
         val addressLatLayout = createTextInputLayout(context, "Lat")
         val addressLatEditText = createTextInputEditText(
-            context,
-            InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
+            context, InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
         ).apply {
             id = R.id.edt_txt_address_lat
         }
         val addressLngLayout = createTextInputLayout(context, "Lng")
         val addressLngEditText = createTextInputEditText(
-            context,
-            InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
+            context, InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
         ).apply {
             id = R.id.edt_txt_address_lng
         }
@@ -184,8 +147,7 @@ class MainActivity : AppCompatActivity() {
         addressLayout.boxStrokeWidth = 0
         addressLayout.boxStrokeWidthFocused = 0
         addressLayout.layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
+            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
         ).apply {
             weight = 1f
             marginStart = 16.dpToPx()
@@ -206,8 +168,7 @@ class MainActivity : AppCompatActivity() {
         editText.setBackgroundResource(android.R.color.white)
         editText.background = shapeDrawable
         editText.layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.MATCH_PARENT
+            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT
         )
         editText.setPadding(24, 16, 24, 16)
 
@@ -236,15 +197,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun createMaterialButton(
-        context: Context,
-        text: String,
-        onClickListener: View.OnClickListener?
+        context: Context, text: String, onClickListener: View.OnClickListener?
     ): MaterialButton {
         val button = MaterialButton(context)
         button.text = text
         button.layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
+            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
         )
         button.backgroundTintList = ContextCompat.getColorStateList(context, R.color.orange)
         button.setTextColor(ContextCompat.getColor(context, R.color.white))
@@ -259,26 +217,35 @@ class MainActivity : AppCompatActivity() {
 
     private fun getRoute(): String = with(binding) {
         val addresses = mutableListOf<Coords>()
-        val depotCoords = Coords(
-            -1,
-            binding.edtTxtDepoLat.text.toString().toDouble(),
-            binding.edtTxtDepoLng.text.toString().toDouble()
-        )
         var id = 1
+        var isValid = true // Flag to track field validity
         for (layout in layoutList) {
-            val addressLatEditText =
-                layout.findViewById<TextInputEditText>(R.id.edt_txt_address_lat)
-            val addressLngEditText =
-                layout.findViewById<TextInputEditText>(R.id.edt_txt_address_lng)
-            val lat = addressLatEditText.text.toString().toDouble()
-            val lng = addressLngEditText.text.toString().toDouble()
-            addresses.add(Coords(id, lat, lng))
-            id += 1
+            val latEditText = layout.findViewById<TextInputEditText>(R.id.edt_txt_address_lat)
+            val lngEditText = layout.findViewById<TextInputEditText>(R.id.edt_txt_address_lng)
+            if (!latEditText?.text.isNullOrEmpty() && !lngEditText?.text.isNullOrEmpty()) {
+                val lat = latEditText.text.toString().toDouble()
+                val lng = lngEditText.text.toString().toDouble()
+                addresses.add(Coords(id, lat, lng))
+                id += 1
+            } else {
+                isValid = false // Set flag to false if fields are not filled
+                break // Exit the loop if any field is empty
+            }
         }
-        val route = findShortestRoute(depotCoords, addresses).map {
-            it.id
+        if (isValid && !binding.edtTxtDepoLat.text.isNullOrEmpty() && !binding.edtTxtDepoLng.text.isNullOrEmpty()) {
+            val depotCoords = Coords(
+                -1,
+                binding.edtTxtDepoLat.text.toString().toDouble(),
+                binding.edtTxtDepoLng.text.toString().toDouble()
+            )
+            val route = findShortestRoute(depotCoords, addresses).map {
+                it.id
+            }
+            return route.joinToString(separator = " - ")
+        } else {
+            Toast.makeText(this@MainActivity, "Please fill all fields", Toast.LENGTH_SHORT).show()
+            return "" // Return an empty string or handle the invalid case accordingly
         }
-        return route.joinToString(separator = " - ")
     }
 
     private fun clearAddressLayouts() {
@@ -300,15 +267,10 @@ class MainActivity : AppCompatActivity() {
         val depot = LatLng(depotCoords.lat, depotCoords.lng)
         val deliveries = deliveryCoords.map { LatLng(it.lat, it.lng) }
 
-        val context = GeoApiContext.Builder()
-            .apiKey(API_KEY)
-            .build()
+        val context = GeoApiContext.Builder().apiKey(API_KEY).build()
 
-        val request = DirectionsApi.newRequest(context)
-            .origin(depot)
-            .destination(depot)
-            .waypoints(*deliveries.toTypedArray())
-            .optimizeWaypoints(true)
+        val request = DirectionsApi.newRequest(context).origin(depot).destination(depot)
+            .waypoints(*deliveries.toTypedArray()).optimizeWaypoints(true)
 
         val result: DirectionsResult = try {
             request.await()
@@ -341,9 +303,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun Int.dpToPx(): Int {
         return TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            this.toFloat(),
-            resources.displayMetrics
+            TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), resources.displayMetrics
         ).toInt()
     }
 
